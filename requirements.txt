@@ -1,0 +1,4 @@
+streamlit
+requests
+jinja2
+python-dotenv

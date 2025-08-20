@@ -1,0 +1,397 @@
+<html lang="en"><head>
+    <title>Resume - {{name}}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?display=swap&amp;family=Plus Jakarta Sans" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/6f0f7e91b9.js" crossorigin="anonymous"></script>
+	<style>
+.experience-class,.experience-class span,.experience-class span strong,.experience-class strong,.experience-class strong span,.experience-class p{font-weight:600!important;font-size:16px!important;}.experience-class li,body{font-size:15px}@media (min-width:767px){.xyz{background:#fff;padding:3px;width:220px;height:190px;overflow:hidden;margin:0 20px 20px;background-image:linear-gradient(to right ,#131464,#7180fe);position:relative}.crop{position:absolute;top:40%;left:24%;width:50%}.profilenameandtitlecss{margin-top:4rem}.fullrowcss{margin-top:110px;padding:35px}.experiencecss{margin-top:-80px}}.profiles{border-radius:50%;width:220px;height:220px;border:4px solid #000;object-fit:cover}.container{background-color:#fff}body{background-color:grey;font-family:'Plus Jakarta Sans'}li{line-height:22px}p{margin:5px!important}ul p{margin:0!important}.experience-class{font-size:16px}.experience-class li span{font-weight:400!important}@media (max-width:767px){.crop{position:absolute;margin:auto;left:0;right:0;top:40%;text-align:center;z-index:1}.xyz{background:#fff;padding:3px;width:100%;height:190px;overflow:hidden;background-image:linear-gradient(to right ,#131464,#7180fe);position:relative}.profilenameandtitlecss{margin-top:7rem;text-align:center}.experiencecss,.fullrowcss{margin-top:10px}.fullrowcss{padding:35px}body{font-size:14px}}
+</style>
+      <script>
+        $(document).ready(function(){
+            function getCoordinates(centerX, centerY, radius, angle) {
+                return {
+                    x: centerX + radius * Math.cos(angle),
+                    y: centerY - radius * Math.sin(angle)
+                };
+            }
+            function isPointInTriangle(px, py, ax, ay, bx, by, cx, cy) {
+                const v0 = [cx - ax, cy - ay];
+                const v1 = [bx - ax, by - ay];
+                const v2 = [px - ax, py - ay];
+                const dot00 = v0[0] * v0[0] + v0[1] * v0[1];
+                const dot01 = v0[0] * v1[0] + v0[1] * v1[1];
+                const dot02 = v0[0] * v2[0] + v0[1] * v2[1];
+                const dot11 = v1[0] * v1[0] + v1[1] * v1[1];
+                const dot12 = v1[0] * v2[0] + v1[1] * v2[1];
+                const invDenom = 1 / (dot00 * dot11 - dot01 * dot01);
+                const u = (dot11 * dot02 - dot01 * dot12) * invDenom;
+                const v = (dot00 * dot12 - dot01 * dot02) * invDenom;
+                return (u >= 0) && (v >= 0) && (u + v < 1);
+            }
+            function updateEquilateralTriangle(aptitudeScore, skillScore, languageScore) {
+                const centerX = 150;
+                const centerY = 150;
+                const maxScore = 100;
+                const sideLength = 125;
+                const aptitudeRadius = (aptitudeScore / maxScore) * sideLength;
+                const skillRadius = (skillScore / maxScore) * sideLength;
+                const languageRadius = (languageScore / maxScore) * sideLength;
+                const angle1 = Math.PI / 2;
+                const angle2 = (7 * Math.PI) / 6;
+                const angle3 = (11 * Math.PI) / 6;
+                const { x: x1, y: y1 } = getCoordinates(centerX, centerY, languageRadius, angle1);
+                const { x: x2, y: y2 } = getCoordinates(centerX, centerY, aptitudeRadius, angle2);
+                const { x: x3, y: y3 } = getCoordinates(centerX, centerY, skillRadius, angle3);
+                const triangle = document.getElementById('triangle');
+                triangle.setAttribute('points', `${x1},${y1} ${x2},${y2} ${x3},${y3}`);
+                const { x: gridX1, y: gridY1 } = getCoordinates(centerX, centerY, sideLength, angle1);
+                const { x: gridX2, y: gridY2 } = getCoordinates(centerX, centerY, sideLength, angle2);
+                const { x: gridX3, y: gridY3 } = getCoordinates(centerX, centerY, sideLength, angle3);
+                const gridLine1 = document.getElementById('grid-line1');
+                gridLine1.setAttribute('x1', gridX1);
+                gridLine1.setAttribute('y1', gridY1);
+                gridLine1.setAttribute('x2', gridX2);
+                gridLine1.setAttribute('y2', gridY2);
+                const gridLine2 = document.getElementById('grid-line2');
+                gridLine2.setAttribute('x1', gridX2);
+                gridLine2.setAttribute('y1', gridY2);
+                gridLine2.setAttribute('x2', gridX3);
+                gridLine2.setAttribute('y2', gridY3);
+                const gridLine3 = document.getElementById('grid-line3');
+                gridLine3.setAttribute('x1', gridX3);
+                gridLine3.setAttribute('y1', gridY3);
+                gridLine3.setAttribute('x2', gridX1);
+                gridLine3.setAttribute('y2', gridY1);
+                const axisLine1 = document.getElementById('axis-line1');
+                axisLine1.setAttribute('x1', centerX);
+                axisLine1.setAttribute('y1', centerY);
+                axisLine1.setAttribute('x2', gridX1);
+                axisLine1.setAttribute('y2', gridY1);
+                const axisLine2 = document.getElementById('axis-line2');
+                axisLine2.setAttribute('x1', centerX);
+                axisLine2.setAttribute('y1', centerY);
+                axisLine2.setAttribute('x2', gridX2);
+                axisLine2.setAttribute('y2', gridY2);
+                const axisLine3 = document.getElementById('axis-line3');
+                axisLine3.setAttribute('x1', centerX);
+                axisLine3.setAttribute('y1', centerY);
+                axisLine3.setAttribute('x2', gridX3);
+                axisLine3.setAttribute('y2', gridY3);
+                const axisLabel1 = document.getElementById('axis-label1');
+                axisLabel1.setAttribute('x', centerX);
+                axisLabel1.setAttribute('y', gridY1 - 10);
+                axisLabel1.textContent = "Language";
+                const axisLabel2 = document.getElementById('axis-label2');
+                axisLabel2.setAttribute('x', gridX2 - 10);
+                axisLabel2.setAttribute('y', gridY2 + 20);
+                axisLabel2.textContent = "Aptitude";
+                const axisLabel3 = document.getElementById('axis-label3');
+                axisLabel3.setAttribute('x', gridX3 + 10);
+                axisLabel3.setAttribute('y', gridY3 + 20);
+                axisLabel3.textContent = "Skill";
+                // Add inner dotted triangle for 50 score
+                const innerRadius = (50 / maxScore) * sideLength;
+                const { x: ix1, y: iy1 } = getCoordinates(centerX, centerY, innerRadius, angle1);
+                const { x: ix2, y: iy2 } = getCoordinates(centerX, centerY, innerRadius, angle2);
+                const { x: ix3, y: iy3 } = getCoordinates(centerX, centerY, innerRadius, angle3);
+                const innerTriangle = document.getElementById('inner-triangle');
+                innerTriangle.setAttribute('points', `${ix1},${iy1} ${ix2},${iy2} ${ix3},${iy3}`);
+                // Add score labels for skill axis only
+                const skillLabel50 = document.getElementById('skill-label50');
+                const skillLabel100 = document.getElementById('skill-label100');
+                const { x: skillX50, y: skillY50 } = getCoordinates(centerX, centerY, innerRadius, angle3);
+                skillLabel50.setAttribute('x', skillX50 - 12);
+                skillLabel50.setAttribute('y', skillY50 + 12);
+                skillLabel50.textContent = "50";
+                const { x: skillX100, y: skillY100 } = getCoordinates(centerX, centerY, sideLength, angle3);
+                skillLabel100.setAttribute('x', skillX100 + 5);
+                skillLabel100.setAttribute('y', skillY100 + 5);
+                skillLabel100.textContent = "100";
+            }
+                        
+            //Example scores (you can update these scores dynamically)
+            const aptitudeScore = 0;
+            const skillScore = 0;
+            const languageScore = 0;
+            
+            // if(aptitudeScore > 0 && skillScore > 0 && languageScore > 0) {
+                // updateEquilateralTriangle(aptitudeScore, skillScore, languageScore);
+            // }
+            // if(aptitudeScore > 0 && skillScore > 0 && languageScore > 0) {
+
+                // Define the scores out of 100 for each bar
+                const scores = {
+                    bar1: languageScore,  // This should reach grid line 3
+                    bar2: aptitudeScore,  // This should be between grid lines 3 and 4
+                    bar3: skillScore,  // This should reach somewhere after grid line 3
+                    //bar4: 100  // This should reach grid line 5
+                };
+            // }
+            // Calculate bar widths dynamically based on score
+            function setBarWidths(scores) {
+                // Define width values corresponding to each grid line
+                const minBarX = 140;
+                const gridLineXPositions = [150, 250, 350, 450, 550];
+                const maxBarWidth = gridLineXPositions[gridLineXPositions.length - 1] - minBarX;
+
+                Object.keys(scores).forEach(barId => {
+                const score = scores[barId];
+                const barWidth = (score / 100) * maxBarWidth;
+                document.getElementById(barId).setAttribute("width", barWidth);
+                });
+            }
+
+            // Apply the bar widths based on scores
+            setBarWidths(scores);
+
+            let extraverted = '0';
+            let introverted = '0';
+            let intuitive = '0';
+            let observant = '0';
+            let feeling = '0';
+            let thinking = '0';
+            let judging = '0';
+            let prospecting = '0';
+            
+            if(extraverted != '' && introverted != '' && intuitive != '' && observant != ''&& feeling != ''&& thinking != ''&& judging != ''&& prospecting != '') {
+            // Call the function to apply the changes
+                updateRectangles();
+
+                function getScores() {
+                    return [
+                        { Extraverted: '0', Introverted: '0' }, // for Extraverted/Intraverted
+                        { Intuitive: '0', Observant: '0' },     // for Intuitive/Observant
+                        { Thinking: '0', Feeling: '0' },        // for Thinking/Feeling
+                        { Judging: '0', Prospecting: '0' }      // for Judging/Prospecting
+                    ];
+                }
+                            
+                            // Function to update ellipse positions and display text based on input values
+                            // Function to update rectangle positions and display text based on input values
+                function updateRectanglePosition(leftValue, rightValue, innerRectId, outerRectId, textId, leftLabel, rightLabel) {
+                    const barWidth = 260; // Total width of the bar in the SVG
+                    const rectWidth = 15; // Width of the inner rectangle
+                    const svgCenter = barWidth / 2; // Center position for x within the SVG
+                    const offset = 10; // Offset to prevent rectangle from being at the very edge
+                    const maxScore = 100; // Maximum score for each corner
+                    const centerValue = 50; // Center value baseline
+
+                    // Calculate the position of the rectangle based on left and right values
+                    let x;
+                    if (leftValue === centerValue && rightValue === centerValue) {
+                        x = svgCenter - rectWidth / 2; // Center position
+                    } else if (rightValue > centerValue) {
+                        x = svgCenter + ((rightValue - centerValue) / (maxScore - centerValue)) * (svgCenter - offset) - rectWidth / 2; // Shift to the right based on rightValue
+                    } else if (leftValue > centerValue) {
+                        x = svgCenter - ((leftValue - centerValue) / (maxScore - centerValue)) * (svgCenter - offset) - rectWidth / 2; // Shift to the left based on leftValue
+                    } else {
+                        x = svgCenter - rectWidth / 2; // Default center position
+                    }
+
+                    // Ensure x is within the bounds of the bar
+                    x = Math.max(offset, Math.min(x, barWidth - rectWidth - offset));
+
+                    // Update the inner rectangle's position
+                    const innerRect = document.getElementById(innerRectId);
+                    if (innerRect) {
+                        innerRect.setAttribute('x', x);
+                    }
+
+                    // Update the outer rectangle's position, slightly offset from the inner one
+                    const outerRect = document.getElementById(outerRectId);
+                    if (outerRect) {
+                        outerRect.setAttribute('x', x - 1.5); // Offset to center the outline around the inner rectangle
+                    }
+
+                    // Update the text element with the label
+                    const textElement = document.getElementById(textId);
+                    if (textElement) {
+                        const label = leftValue > rightValue ? leftLabel : rightLabel;
+                        textElement.textContent = label;
+                    }
+                }
+
+                // Update each inner and outer rectangle along with the text based on corresponding scores
+                function updateRectangles() {
+                    // Get scores from the getScores function
+                    const scores = getScores();
+
+                    // Update inner and outer rectangles and text for each score
+                    updateRectanglePosition(scores[0].Extraverted, scores[0].Introverted, 'rectExtraverted', 'outerRectExtraverted', 'textExtraverted', 'Extraverted', 'Introverted');
+                    updateRectanglePosition(scores[1].Intuitive, scores[1].Observant, 'rectIntuitive', 'outerRectIntuitive', 'textIntuitive', 'Intuitive', 'Observant');
+                    updateRectanglePosition(scores[2].Thinking, scores[2].Feeling, 'rectThinking', 'outerRectThinking', 'textThinking', 'Thinking', 'Feeling');
+                    updateRectanglePosition(scores[3].Judging, scores[3].Prospecting, 'rectJudging', 'outerRectJudging', 'textJudging', 'Judging', 'Prospecting');
+                }
+
+            }
+            
+
+        });
+
+        
+    </script>
+<style>
+    .label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .svg-personality svg {
+            width: 90%;
+            height: 100%;
+            margin: 0px 30px;
+        }
+        #personalityid {
+            width: 272px;
+            height: 186px;
+        }
+        #triangle {
+            fill: rgba(146, 152, 255, 10.8);
+            stroke: #4f5bff;
+            stroke-width: 1px;
+        }
+        .grid-line {
+            stroke: #AAAAAA;
+            stroke-dasharray: 3, 3;
+            stroke-width: 1px;
+        }
+        .axis-line {
+            stroke: #4c4b4b;
+            stroke-width: 1px;
+        }
+        .axis-label {
+            font-size: 12px;
+            text-anchor: middle;
+            fill: #3D3D3D;
+        }
+        .score-label {
+            font-size: 10px;
+            fill: #3D3D3D;
+        }
+        #inner-triangle {
+            fill: none;
+            stroke: #3D3D3D;
+            stroke-dasharray: 3, 3;
+            stroke-width: 1px;
+        }
+
+.dotted-line {
+    border-top: 2px dashed #000; /* Dotted border with desired color and thickness */
+    /* margin: 0px 15px; */
+    padding: 5px 0px;
+    width: 100%; /* Full width of its container */
+}
+ul li span{font-family: 'Plus Jakarta Sans' !important;font-size: 15px !important;}
+.experience-class li {font-weight: 400 !important;}
+ul {
+    list-style-type: disc !important;
+    margin: 0em 0em 0em 1em !important;
+    padding: 0em 0em 0em 1em !important;
+}
+.col {
+    margin: auto;
+    /* padding: revert; */
+}
+.progress-bar {
+    background-color: #5834F8;
+}
+.progress {
+    background-color: #D8D8D8;
+}
+@media (min-width: 767px) {
+    .col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+        padding-right: 40px !important;
+        /* padding-left: 30px !important; */
+    }
+}
+.label { font-size: 20px; fill: #0f014b; font-family:  'Plus Jakarta Sans', sans-serif; font-weight: 700; }
+    .section-title { font-size: 22px; fill: #4444c1; font-family:  'Plus Jakarta Sans', sans-serif; font-weight: 700; }
+    .bar { fill: url(#bar-gradient); }
+    .chart-border { stroke: #4444c1; stroke-width: 1.5; fill: #ffffff; }
+     .grid-label { font-size: 18px; fill: #4444c1; font-family:  'Plus Jakarta Sans', sans-serif; }
+</style>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="xyz">
+            </div>
+            <div class="crop">
+                
+            </div>
+        </div>
+        <div class="col-md-7 profilenameandtitlecss">
+            <h1 class="font-weight-bold text-uppercase" style="font-size: 44px;">{{name}}</h1>
+            <p class="h3">{{job_title}}</p>
+        </div>
+    </div>
+    <div class="row fullrowcss">
+        <div class="col-md-5">
+            <!-- <p><span><img alt="call" style="max-width: 9%;" src="/wp-content/uploads/2023/11/call-icon.svg">&nbsp;&nbsp;&nbsp;(214) GO-RELAY / (214) 467-3529</span></p> -->
+            <p><span><i class="fa-solid fa-phone"></i>&nbsp;&nbsp;&nbsp;(214) GO-RELAY / (214) 467-3529</span></p>
+            <p><span><i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;&nbsp;Careers@RelayHumanCloud.com</span></p>
+            <p><span><i class="fa-solid fa-house"></i>&nbsp;&nbsp;&nbsp;India</span></p>
+            <!-- <p><span><img alt="email" style="max-width: 9%;" src="/wp-content/uploads/2023/11/Email-Blue-icon.png">&nbsp;&nbsp;&nbsp;Careers@RelayHumanCloud.com</span></p>
+            <p><span><img alt="home" style="max-width: 9%;" src="/wp-content/uploads/2023/11/Icon_Homeowners.webp">&nbsp;&nbsp;&nbsp;India</span></p> -->
+                        
+            <br>
+            <p class="h6 text-center font-weight-bold" style="background-color: #03034D; color: white; padding: 10px;">SKILLS</p>
+                <ul class="mt-3">
+                    {% for skill in skills %}
+                        <li><span data-teams="true">{{ skill }}</span></li>
+                    {% endfor %}
+                </ul>
+
+            <br>
+            <p class="h6 text-center font-weight-bold mb-3" style="background-color: #03034D; color: white; padding: 10px;">EDUCATION</p>
+            {% for item in education %}
+                <p style="margin-bottom: 3px;">{{ item.degree }}</p>
+                <p style="font-size: 13px;">{{ item.institution }} {{item.year}}</p>
+            {% endfor %}
+            
+            <!-- <p class="mt-3" style="margin-bottom: 3px;">Bachelor of Business Administration</p>
+            <p style="font-size: 13px;">KIIT University (2020)</p> -->
+            <p class="h6 text-center font-weight-bold mt-3" style="background-color: #03034D; color: white; padding: 10px;">LICENSES &amp; CERTIFICATIONS</p>
+                <ul class="mt-3">
+                    {% for certificate in certifications %}
+                        <li><span data-teams="true">{{ certificate.name }} | {{ certificate.issuer }}</span></li> 
+                    {% endfor %}
+                </ul>
+            
+            <br>
+        </div>
+        <!-- <div class="col-md-1">
+
+        </div> -->
+        <div class="col-md-7 experiencecss">
+            <p class="h6 text-center font-weight-bold" style="background-color: #03034D; color: white; padding: 10px;">PROFESSIONAL SUMMARY</p>
+            <!-- <p>Dedicated and results-driven banking professional with nearly three years ofnexperience in financial services, including expertise in credit analysis, loannprocessing, mortgage underwriting, risk management, and customer relationship management. Developed a dynamic acquisition financial model in Excel to evaluate the internal rate of return (IRR) for acquired projects. Seeking tontransition into Analyst role proven ability to analyze financial data, optimizenprocesses, and collaborate with cross-functional teams. Skilled in requirementngathering, data interpretation, and using tools like Excel, SQL, and Power BI to driveninsights and support decision making</p> -->
+            <p>{{ professional_summary }}</p>
+            
+            <div class="experience-class mt-3">
+                <p class="h6 text-center font-weight-bold mb-2" style="background-color: #03034D; color: white; padding: 10px;">PROFESSIONAL EXPERIENCE</p>
+                {% for item in experience %}
+                    <p><span data-teams="true">{{ item.title }}&nbsp;</span> </p>
+                    <p>{{ item.company }} | {{  item.location }} | {{ item.duration }}</p>
+                        <ul>
+                            {% for role in item.responsibilities %}
+                                <li>{{ role }}</li>
+                            {% endfor %}
+                        </ul>
+                {% endfor %}
+                <br>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        
+    </div>
+</div>
+
+<ccc7a943-d900-47a6-9b90-1c1ddd52a5da></ccc7a943-d900-47a6-9b90-1c1ddd52a5da></body></html>
